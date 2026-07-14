@@ -11,8 +11,12 @@ const timeZone = process.env.TZ || 'Asia/Shanghai';
 const debug = process.env.MODEL_DEBUG === '1';
 
 const themes = [
-  [1, 'rest', '休息日'], [3, 'relaxed', '轻松日'], [5, 'productive', '充实日'],
-  [7, 'focused', '专注日'], [9, 'intense', '极限日'], [Infinity, 'legendary', '超神日']
+  [1, 'rest', '休息日'],
+  [3, 'relaxed', '轻松日'],
+  [5, 'productive', '充实日'],
+  [7, 'focused', '专注日'],
+  [9, 'intense', '极限日'],
+  [Infinity, 'legendary', '超神日']
 ];
 
 function requestJson(url, options, body) {
@@ -36,13 +40,22 @@ function formatDate(date) {
   return new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
 }
 
-function dateBefore(days) { const date = new Date(); date.setDate(date.getDate() - days); return formatDate(date); }
+function dateBefore(days) {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return formatDate(date);
+}
 
 async function getWakaTimeData() {
   if (process.env.WAKATIME_RAW_JSON) return JSON.parse(process.env.WAKATIME_RAW_JSON);
   if (!token) throw new Error('WAKATIME_TOKEN is required.');
-  const authorization = /^waka_/i.test(token) ? `Basic ${Buffer.from(`${token}:`).toString('base64')}` : (/^bearer\s/i.test(token) ? token : `Bearer ${token}`);
-  return requestJson(`https://wakatime.com/api/v1/users/current/summaries?start=${dateBefore(6)}&end=${dateBefore(0)}`, { method: 'GET', headers: { Authorization: authorization } });
+  const authorization = /^waka_/i.test(token)
+    ? `Basic ${Buffer.from(`${token}:`).toString('base64')}`
+    : (/^bearer\s/i.test(token) ? token : `Bearer ${token}`);
+  return requestJson(
+    `https://wakatime.com/api/v1/users/current/summaries?start=${dateBefore(6)}&end=${dateBefore(0)}`,
+    { method: 'GET', headers: { Authorization: authorization } }
+  );
 }
 
 function parseDays(raw) {
@@ -71,8 +84,8 @@ function selectTheme(hours) {
 function fallbackAi(average) {
   if (average < 1.5) return { title: '休养生息', quote: '代码写得少，Bug 自然少。', tarot: '🛌 The Hermit', theme_color: '#a0c4ff' };
   if (average < 4.5) return { title: '渐入佳境', quote: '保持节奏，每一行代码都在积累。', tarot: '🌱 The Empress', theme_color: '#80ed99' };
-  if (average < 8) return { title: '火力全开', quote: '键盘在喊累，但 Commit 还在飞。', tarot: '⚡ The Magician', theme_color: '#f5af19' };
-  return { title: '赛博飞升', quote: '你不是在写代码，而是在编织未来。', tarot: '💥 The World', theme_color: '#00c6ff' };
+  if (average < 8) return { title: '火力全开', quote: '键盘在喊累，但 Commit 还在飞。', tarot: '🪄 The Magician', theme_color: '#f5af19' };
+  return { title: '赛博飞升', quote: '你不是在写代码，而是在编织未来。', tarot: '🔮 The World', theme_color: '#00c6ff' };
 }
 
 function normaliseAi(value, fallback) {
@@ -88,11 +101,21 @@ function normaliseAi(value, fallback) {
 async function generateAi(stats) {
   const fallback = fallbackAi(stats.average);
   if (!githubToken) return fallback;
-  const prompt = `根据本周编码数据生成严格 JSON：title（4-6字）、quote（30字以内中文点评）、tarot（含 emoji）、theme_color（#RRGGBB）。数据：总计 ${stats.total.toFixed(1)} 小时，日均 ${stats.average.toFixed(1)} 小时，趋势 ${stats.trend}，峰值 ${stats.peak.date} ${stats.peak.hours} 小时。`;
+  const prompt = `根据本周编码数据生成严格 JSON：title（2-6字）、quote（60字以内中文点评）、tarot（含 emoji）、theme_color（#RRGGBB）。数据：总计 ${stats.total.toFixed(1)} 小时，日均 ${stats.average.toFixed(1)} 小时，趋势 ${stats.trend}，峰值 ${stats.peak.date} ${stats.peak.hours} 小时。`;
   try {
     const result = await requestJson('https://models.github.ai/inference/chat/completions', {
-      method: 'POST', headers: { Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', Authorization: `Bearer ${githubToken}` }
-    }, JSON.stringify({ model: modelName, temperature: 0.8, max_tokens: 180, messages: [{ role: 'system', content: 'Return JSON only.' }, { role: 'user', content: prompt }] }));
+      method: 'POST',
+      headers: {
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${githubToken}`
+      }
+    }, JSON.stringify({
+      model: modelName,
+      temperature: 0.8,
+      max_tokens: 180,
+      messages: [{ role: 'system', content: 'Return JSON only.' }, { role: 'user', content: prompt }]
+    }));
     const content = result && result.choices && result.choices[0] && result.choices[0].message && result.choices[0].message.content;
     return normaliseAi(JSON.parse(String(content || '').replace(/```json|```/gi, '').trim()), fallback);
   } catch (error) {
@@ -101,7 +124,9 @@ async function generateAi(stats) {
   }
 }
 
-function writeJs(file, name, value) { fs.writeFileSync(file, `window.${name} = ${JSON.stringify(value, null, 2)};\n`); }
+function writeJs(file, name, value) {
+  fs.writeFileSync(file, `window.${name} = ${JSON.stringify(value, null, 2)};\n`);
+}
 
 async function main() {
   const days = parseDays(await getWakaTimeData());
@@ -113,8 +138,19 @@ async function main() {
   const ai = await generateAi(stats);
   const output = path.resolve(__dirname, '../../assets/json');
   fs.mkdirSync(output, { recursive: true });
-  writeJs(path.join(output, 'config.js'), 'WAKATIME_CONFIG', { date: yesterday, hours, theme_name: theme[1], theme_display: theme[2], updated_at: new Date().toISOString() });
-  writeJs(path.join(output, 'weekly.js'), 'WAKATIME_WEEKLY', { updated_at: new Date().toISOString(), stats: { total_hours: Number(stats.total.toFixed(2)), daily_avg: Number(stats.average.toFixed(2)), trend: stats.trend, max_day: stats.peak }, days, ai });
+  writeJs(path.join(output, 'config.js'), 'WAKATIME_CONFIG', {
+    date: yesterday,
+    hours,
+    theme_name: theme[1],
+    theme_display: theme[2],
+    updated_at: new Date().toISOString()
+  });
+  writeJs(path.join(output, 'weekly.js'), 'WAKATIME_WEEKLY', {
+    updated_at: new Date().toISOString(),
+    stats: { total_hours: Number(stats.total.toFixed(2)), daily_avg: Number(stats.average.toFixed(2)), trend: stats.trend, max_day: stats.peak },
+    days,
+    ai
+  });
   if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `theme_name=${theme[1]}\n`);
   console.log('Generated WakaTime theme and weekly report.');
 }
