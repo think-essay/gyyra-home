@@ -49,3 +49,12 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
           ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'nginx -t && /etc/init.d/nginx reload'
+
+      - name: Diagnose static asset routing
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_DEPLOY_PATH: ${{ secrets.SERVER_DEPLOY_PATH }}
+        run: |
+          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "test -s '$SERVER_DEPLOY_PATH/assets/js/theme-loader.js'; test -s '$SERVER_DEPLOY_PATH/assets/json/config.js'; ls -ld '$SERVER_DEPLOY_PATH/assets'; grep -n -E 'server_name|root|location|alias|try_files' /www/server/panel/vhost/nginx/www.gyyra.cn.conf"
