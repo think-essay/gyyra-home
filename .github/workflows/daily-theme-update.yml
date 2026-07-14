@@ -1,0 +1,55 @@
+name: WakaTime Daily Theme Update
+
+on:
+  schedule:
+    - cron: "7 0 * * *"
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: Coding hours for testing
+        required: false
+        type: string
+      theme:
+        description: Theme (rest/relaxed/productive/focused/intense/legendary)
+        required: false
+        type: string
+  push:
+    branches: [gh-pages, main, master]
+    paths:
+      - .github/workflows/daily-theme-update.yml
+      - .github/scripts/update-wakatime.js
+
+permissions:
+  contents: write
+  models: read
+
+jobs:
+  update-theme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate WakaTime theme and weekly report
+        id: update
+        env:
+          WAKATIME_TOKEN: ${{ secrets.WAKATIME_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          MODEL_NAME: ${{ vars.MODEL_NAME }}
+          MODEL_DEBUG: ${{ vars.MODEL_DEBUG }}
+          MANUAL_HOURS: ${{ inputs.hours }}
+          MANUAL_THEME: ${{ inputs.theme }}
+          TZ: Asia/Shanghai
+        run: node .github/scripts/update-wakatime.js
+
+      - name: Commit generated WakaTime data
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: assets/json/config.js assets/json/weekly.js
+          message: "chore: update WakaTime theme ${{ steps.update.outputs.theme_name }}"
+          github_token: ${{ secrets.GH_TOKEN }}

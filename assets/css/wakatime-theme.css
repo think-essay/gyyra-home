@@ -1,0 +1,18 @@
+:root { --wakatime-theme-color: #a0c4ff; }
+.js-avatar.glowing { border: 2px solid rgba(255,255,255,.25); box-shadow: 0 0 var(--glow-size, 16px) var(--wakatime-theme-color); animation: wakatime-pulse var(--pulse-speed, 3s) ease-in-out infinite; }
+@keyframes wakatime-pulse { 50% { transform: scale(1.03); box-shadow: 0 0 32px var(--wakatime-theme-color); } }
+.wakatime-status { position: fixed; right: 24px; bottom: 24px; z-index: 1000; padding: 8px 15px; border: 1px solid rgba(255,255,255,.25); border-radius: 22px; color: #fff; background: rgba(12,12,18,.58); backdrop-filter: blur(12px); box-shadow: 0 8px 28px rgba(0,0,0,.3); cursor: pointer; font: 13px/1.2 system-ui,sans-serif; transition: .25s ease; }
+.wakatime-status:hover { transform: translateY(-2px); border-color: var(--wakatime-theme-color); box-shadow: 0 8px 28px rgba(0,0,0,.35),0 0 12px var(--wakatime-theme-color); }
+.weekly-modal { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 20px; background: rgba(0,0,0,.54); backdrop-filter: blur(3px); }
+.weekly-card { width: min(420px,100%); overflow: hidden; color: #eee; background: #0b0b10; border: 1px solid #353540; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,.5); font: 14px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace; }
+.weekly-card__header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #282832; color: var(--wakatime-theme-color); }
+.weekly-card__close { border: 0; color: #aaa; background: transparent; font-size: 20px; cursor: pointer; }
+.weekly-card__body { padding: 18px 20px; }
+.weekly-card__quote { min-height: 44px; color: #c6c6cb; }
+.weekly-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 18px; background: #282832; }
+.weekly-stat { padding: 12px 6px; text-align: center; background: #14141b; }
+.weekly-stat strong { display: block; color: #fff; font-size: 18px; }
+.weekly-stat span { color: #898995; font-size: 10px; letter-spacing: .08em; }
+.weekly-days { display: flex; align-items: end; gap: 5px; height: 70px; margin-top: 18px; }
+.weekly-days i { flex: 1; min-height: 3px; background: var(--wakatime-theme-color); opacity: .82; }
+@media (max-width: 640px) { .wakatime-status { right: 14px; bottom: 14px; } }
