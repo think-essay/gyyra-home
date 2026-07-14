@@ -1,0 +1,51 @@
+name: Locate Legacy Directory Reference
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  locate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load deployment key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      - name: Trust the server host key
+        env:
+          SERVER_KNOWN_HOSTS: ${{ secrets.SERVER_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$SERVER_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Identify reference category without exposing configuration
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" '
+            old_path=/www/wwwroot/gyyra.cn
+            found=false
+            if nginx -T 2>/dev/null | grep -Fq "$old_path"; then
+              echo REFERENCE_CATEGORY=nginx
+              found=true
+            fi
+            if grep -R -Fq "$old_path" /www/server/panel/vhost/nginx /www/server/panel/vhost/rewrite 2>/dev/null; then
+              echo REFERENCE_CATEGORY=panel_vhost
+              found=true
+            fi
+            if crontab -l 2>/dev/null | grep -Fq "$old_path"; then
+              echo REFERENCE_CATEGORY=cron
+              found=true
+            fi
+            if test "$found" = false; then
+              echo REFERENCE_CATEGORY=unknown
+            fi
+          '
