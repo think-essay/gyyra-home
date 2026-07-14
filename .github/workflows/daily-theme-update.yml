@@ -25,6 +25,7 @@ permissions:
 
 jobs:
   update-theme:
+    if: ${{ secrets.WAKATIME_TOKEN != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
