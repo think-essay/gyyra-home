@@ -28,8 +28,15 @@ jobs:
         run: node assets/js/bing.js
 
       - name: Commit generated image list
+        id: commit
         uses: EndBug/add-and-commit@v9
         with:
           add: assets/json/images.js
           message: "chore: update Bing images"
           github_token: ${{ secrets.GH_TOKEN }}
+
+      - name: Deploy updated Bing images
+        if: steps.commit.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: gh workflow run deploy-server.yml --ref main
