@@ -48,4 +48,4 @@ jobs:
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
-          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'nginx -t && systemctl reload nginx'
+          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'nginx -t && /etc/init.d/nginx reload'
