@@ -1,0 +1,62 @@
+name: Archive Legacy Site Directory
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load deployment key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      - name: Trust the server host key
+        env:
+          SERVER_KNOWN_HOSTS: ${{ secrets.SERVER_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$SERVER_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Archive the unused legacy directory safely
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" '
+            set -eu
+            old_path=/www/wwwroot/gyyra.cn
+            referenced=false
+            nginx -T 2>/dev/null | grep -Fq "$old_path" && referenced=true
+            grep -R -Fq "$old_path" /www/server/panel/vhost/nginx /www/server/panel/vhost/rewrite 2>/dev/null && referenced=true
+            crontab -l 2>/dev/null | grep -Fq "$old_path" && referenced=true
+            if test "$referenced" = true; then
+              echo LEGACY_DIRECTORY_ARCHIVED=false
+              exit 1
+            fi
+
+            if test ! -e "$old_path"; then
+              echo LEGACY_DIRECTORY_ALREADY_ABSENT=true
+              exit 0
+            fi
+            if test ! -d "$old_path" || test -L "$old_path"; then
+              echo LEGACY_DIRECTORY_ARCHIVED=false
+              exit 1
+            fi
+
+            backup_path=/www/wwwroot/.gyyra.cn-legacy-directory-backup-$(date +%Y%m%d%H%M%S)
+            mv "$old_path" "$backup_path"
+            if ! nginx -t >/dev/null 2>&1; then
+              mv "$backup_path" "$old_path"
+              echo LEGACY_DIRECTORY_ARCHIVED=false
+              exit 1
+            fi
+            echo LEGACY_DIRECTORY_ARCHIVED=true
+          '
