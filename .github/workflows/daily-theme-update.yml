@@ -48,8 +48,15 @@ jobs:
         run: node .github/scripts/update-wakatime.js
 
       - name: Commit generated WakaTime data
+        id: commit
         uses: EndBug/add-and-commit@v9
         with:
           add: assets/json/config.js assets/json/weekly.js
           message: "chore: update WakaTime theme ${{ steps.update.outputs.theme_name }}"
           github_token: ${{ secrets.GH_TOKEN }}
+
+      - name: Deploy updated WakaTime data
+        if: steps.commit.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: gh workflow run deploy-server.yml --ref main
