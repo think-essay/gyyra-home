@@ -1,8 +1,8 @@
 window.WAKATIME_WEEKLY = {
-  "updated_at": "2026-07-16T03:31:09.162Z",
+  "updated_at": "2026-07-16T04:17:46.466Z",
   "stats": {
-    "total_hours": 15.48,
-    "daily_avg": 2.21,
+    "total_hours": 15.74,
+    "daily_avg": 2.25,
     "trend": "rising",
     "max_day": {
       "date": "2026-07-14",
@@ -43,14 +43,14 @@ window.WAKATIME_WEEKLY = {
     },
     {
       "date": "2026-07-16",
-      "hours": 0.09,
-      "text": "5 mins"
+      "hours": 0.35,
+      "text": "21 mins"
     }
   ],
   "ai": {
-    "title": "高效进阶",
-    "quote": "本周编码时间显著上升，日均达到2.2小时，峰值近8小时，效率持续提升，值得鼓励。",
-    "tarot": "🌟📈",
-    "theme_color": "#4A90E2"
+    "title": "高效进步",
+    "quote": "本周编码时间显著提升，日均效率持续上涨，迎来新高峰。保持动力，逐步迈向更高目标！",
+    "tarot": "🌅🌟🃏",
+    "theme_color": "#39A7FF"
   }
 };
