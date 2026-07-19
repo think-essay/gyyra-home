@@ -1,8 +1,8 @@
 window.WAKATIME_WEEKLY = {
-  "updated_at": "2026-07-18T03:24:32.431Z",
+  "updated_at": "2026-07-19T03:45:35.888Z",
   "stats": {
-    "total_hours": 26.92,
-    "daily_avg": 3.85,
+    "total_hours": 33.3,
+    "daily_avg": 4.76,
     "trend": "falling",
     "max_day": {
       "date": "2026-07-16",
@@ -11,11 +11,6 @@ window.WAKATIME_WEEKLY = {
     }
   },
   "days": [
-    {
-      "date": "2026-07-12",
-      "hours": 0,
-      "text": "0 secs"
-    },
     {
       "date": "2026-07-13",
       "hours": 0,
@@ -43,14 +38,19 @@ window.WAKATIME_WEEKLY = {
     },
     {
       "date": "2026-07-18",
+      "hours": 6.38,
+      "text": "6 hrs 22 mins"
+    },
+    {
+      "date": "2026-07-19",
       "hours": 0,
       "text": "0 secs"
     }
   ],
   "ai": {
-    "title": "编码下滑",
-    "quote": "本周编码时长下降，日均仅3.8小时，需关注效率与动力。峰值曾达11.14小时，值得反思。",
-    "tarot": "倒立力量 🦁",
-    "theme_color": "#8CA1A5"
+    "title": "效率下滑",
+    "quote": "本周编码时间明显减少，虽有高峰，但整体呈下行趋势。建议调整节奏，避免过度疲劳。",
+    "tarot": "🃏 节制",
+    "theme_color": "#6B8E23"
   }
 };
