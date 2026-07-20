@@ -1,7 +1,7 @@
 window.WAKATIME_WEEKLY = {
-  "updated_at": "2026-07-19T03:45:35.888Z",
+  "updated_at": "2026-07-20T03:57:58.426Z",
   "stats": {
-    "total_hours": 33.3,
+    "total_hours": 33.32,
     "daily_avg": 4.76,
     "trend": "falling",
     "max_day": {
@@ -11,11 +11,6 @@ window.WAKATIME_WEEKLY = {
     }
   },
   "days": [
-    {
-      "date": "2026-07-13",
-      "hours": 0,
-      "text": "0 secs"
-    },
     {
       "date": "2026-07-14",
       "hours": 7.96,
@@ -43,14 +38,19 @@ window.WAKATIME_WEEKLY = {
     },
     {
       "date": "2026-07-19",
+      "hours": 0.02,
+      "text": "1 min"
+    },
+    {
+      "date": "2026-07-20",
       "hours": 0,
       "text": "0 secs"
     }
   ],
   "ai": {
     "title": "效率下滑",
-    "quote": "本周编码时间明显减少，虽有高峰，但整体呈下行趋势。建议调整节奏，避免过度疲劳。",
-    "tarot": "🃏 节制",
-    "theme_color": "#6B8E23"
+    "quote": "本周编码时长显著减少，需警惕效率持续下降。调整节奏，重拾高峰状态，避免陷入低迷期。",
+    "tarot": "🌒 九剑",
+    "theme_color": "#3B82F6"
   }
 };
