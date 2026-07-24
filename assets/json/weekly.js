@@ -1,8 +1,8 @@
 window.WAKATIME_WEEKLY = {
-  "updated_at": "2026-07-23T03:38:36.191Z",
+  "updated_at": "2026-07-24T03:36:46.271Z",
   "stats": {
-    "total_hours": 6.79,
-    "daily_avg": 0.97,
+    "total_hours": 6.4,
+    "daily_avg": 0.91,
     "trend": "falling",
     "max_day": {
       "date": "2026-07-18",
@@ -11,11 +11,6 @@ window.WAKATIME_WEEKLY = {
     }
   },
   "days": [
-    {
-      "date": "2026-07-17",
-      "hours": 0.39,
-      "text": "23 mins"
-    },
     {
       "date": "2026-07-18",
       "hours": 6.38,
@@ -45,12 +40,17 @@ window.WAKATIME_WEEKLY = {
       "date": "2026-07-23",
       "hours": 0,
       "text": "0 secs"
+    },
+    {
+      "date": "2026-07-24",
+      "hours": 0,
+      "text": "0 secs"
     }
   ],
   "ai": {
-    "title": "编码下滑",
-    "quote": "本周编码时间逐渐减少，需关注效率与动力，保持持续进步。",
-    "tarot": "🪙 八金币",
-    "theme_color": "#4A90E2"
+    "title": "编码下降",
+    "quote": "本周编码时间明显减少，需关注效率和动力。保持稳定节奏，避免持续下滑。",
+    "tarot": "🪙 节制",
+    "theme_color": "#5C97F0"
   }
 };
