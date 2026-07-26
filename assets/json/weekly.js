@@ -1,21 +1,16 @@
 window.WAKATIME_WEEKLY = {
-  "updated_at": "2026-07-25T03:33:02.089Z",
+  "updated_at": "2026-07-26T03:49:22.660Z",
   "stats": {
-    "total_hours": 0.02,
+    "total_hours": 0,
     "daily_avg": 0,
-    "trend": "falling",
+    "trend": "rising",
     "max_day": {
-      "date": "2026-07-19",
-      "hours": 0.02,
-      "text": "1 min"
+      "date": "",
+      "hours": 0,
+      "text": "0 secs"
     }
   },
   "days": [
-    {
-      "date": "2026-07-19",
-      "hours": 0.02,
-      "text": "1 min"
-    },
     {
       "date": "2026-07-20",
       "hours": 0,
@@ -45,12 +40,17 @@ window.WAKATIME_WEEKLY = {
       "date": "2026-07-25",
       "hours": 0,
       "text": "0 secs"
+    },
+    {
+      "date": "2026-07-26",
+      "hours": 0,
+      "text": "0 secs"
     }
   ],
   "ai": {
-    "title": "编码低谷",
-    "quote": "本周编码时间几乎为零，效率明显下滑，需调整状态重拾动力。",
-    "tarot": "🦥",
-    "theme_color": "#C0C0C0"
+    "title": "零进展",
+    "quote": "本周编码时间为零，虽有上升趋势，但需付出实际行动才能见成果。",
+    "tarot": "🌱 The Fool",
+    "theme_color": "#E5E5E5"
   }
 };
