@@ -1,5 +1,5 @@
 window.WAKATIME_WEEKLY = {
-  "updated_at": "2026-07-28T03:29:21.342Z",
+  "updated_at": "2026-07-29T03:31:44.662Z",
   "stats": {
     "total_hours": 0,
     "daily_avg": 0,
@@ -11,11 +11,6 @@ window.WAKATIME_WEEKLY = {
     }
   },
   "days": [
-    {
-      "date": "2026-07-22",
-      "hours": 0,
-      "text": "0 secs"
-    },
     {
       "date": "2026-07-23",
       "hours": 0,
@@ -45,12 +40,17 @@ window.WAKATIME_WEEKLY = {
       "date": "2026-07-28",
       "hours": 0,
       "text": "0 secs"
+    },
+    {
+      "date": "2026-07-29",
+      "hours": 0,
+      "text": "0 secs"
     }
   ],
   "ai": {
-    "title": "编码未启",
-    "quote": "本周编码时间为零，需重新审视计划与动力，未来或将迎来变化。",
-    "tarot": "🌑 死亡牌",
-    "theme_color": "#7B7B7B"
+    "title": "待机重启",
+    "quote": "本周编码时间为零，虽然趋势向上，但暂未迈出实际步伐，期待下次更好表现。",
+    "tarot": "🦋 The Fool",
+    "theme_color": "#A9A9A9"
   }
 };
