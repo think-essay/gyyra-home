@@ -1,8 +1,8 @@
 window.WAKATIME_WEEKLY = {
-  "updated_at": "2026-08-09T02:24:07.485Z",
+  "updated_at": "2026-08-10T02:28:48.143Z",
   "stats": {
-    "total_hours": 6.57,
-    "daily_avg": 0.94,
+    "total_hours": 11.15,
+    "daily_avg": 1.59,
     "trend": "rising",
     "max_day": {
       "date": "2026-08-08",
@@ -11,11 +11,6 @@ window.WAKATIME_WEEKLY = {
     }
   },
   "days": [
-    {
-      "date": "2026-08-03",
-      "hours": 0,
-      "text": "0 secs"
-    },
     {
       "date": "2026-08-04",
       "hours": 0,
@@ -43,14 +38,19 @@ window.WAKATIME_WEEKLY = {
     },
     {
       "date": "2026-08-09",
-      "hours": 0.38,
-      "text": "22 mins"
+      "hours": 4.96,
+      "text": "4 hrs 57 mins"
+    },
+    {
+      "date": "2026-08-10",
+      "hours": 0,
+      "text": "0 secs"
     }
   ],
   "ai": {
-    "title": "休养生息",
-    "quote": "代码写得少，Bug 自然少。",
-    "tarot": "🛌 The Hermit",
-    "theme_color": "#a0c4ff"
+    "title": "渐入佳境",
+    "quote": "保持节奏，每一行代码都在积累。",
+    "tarot": "🌱 The Empress",
+    "theme_color": "#80ed99"
   }
 };
