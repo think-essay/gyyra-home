@@ -54,6 +54,7 @@ jobs:
           add: assets/json/config.js assets/json/weekly.js
           message: "chore: update WakaTime theme ${{ steps.update.outputs.theme_name }}"
           github_token: ${{ secrets.GH_TOKEN }}
+          pull: --rebase --autostash
 
       - name: Deploy updated WakaTime data
         if: steps.commit.outputs.committed == 'true'
